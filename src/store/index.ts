@@ -64,16 +64,20 @@ export default createStore({
       state.boards[keyBoard].tasks.push({
         name: "Task #1"
       });
+    },
+    deleteBoard(state, keyBoard){      
+      state.boards.splice(keyBoard, 1);
     }
   },
   actions: {
     insertBoard(context){
       context.commit("insertBoard");
     },
-    insertTask(context, keyBoard){ 
-      console.log(keyBoard);
-      
+    insertTask(context, keyBoard){       
       context.commit("insertTask", keyBoard);
+    },
+    deleteBoard(context, keyBoard){      
+      context.commit("deleteBoard", keyBoard);
     }
   },
   modules: {
