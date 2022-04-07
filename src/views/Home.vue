@@ -8,7 +8,9 @@
           <span contenteditable="true" class="board__title--text">{{ board?.name }}</span>
           <el-dropdown>
             <span class="el-dropdown-link">
-              <el-icon class="edit_point"><more-filled /></el-icon>
+              <el-icon class="edit_point">
+                <more-filled />
+              </el-icon>
             </span>
             <template #dropdown>
               <el-dropdown-menu>
@@ -21,20 +23,22 @@
             </template>
           </el-dropdown>
         </h3>
-        <draggable class="draggable" :list="board.tasks" item-key="id" group="tasks">
-          <template #item="{ element }">
-            <div class="task" @click="openModal()">
-              <div class="marker__list">
-                <div class="marker__item">Hard Work</div>
-              </div>
-              <h3 class="task__title">{{ element.name }}</h3>
-              <div class="bottom__content">
-                <div class="info"></div>
-                <div class="users__list"></div>
-              </div>
-            </div>
-          </template>
-        </draggable>
+
+            <draggable class="draggable" :list="board.tasks" item-key="id" group="tasks">
+              <template #item="{ element }">
+                <div class="task" @click="openModal()">
+                  <div class="marker__list">
+                    <div class="marker__item">Hard Work</div>
+                  </div>
+                  <h3 class="task__title">{{ element.name }}</h3>
+                  <div class="bottom__content">
+                    <div class="info"></div>
+                    <div class="users__list"></div>
+                  </div>
+                </div>
+              </template>
+            </draggable>
+
 
         <div class="board__bottom">
           <button @click="insertTask(board_key)" class="board__link">Добавить задачу</button>
@@ -49,8 +53,10 @@
       <div class="modal">
         <div class="modal__header">
           <h3 class="modal__title">
-            <el-icon class="modal__title--icon"><management /></el-icon>
-            <list-tasks  />
+            <el-icon class="modal__title--icon">
+              <management />
+            </el-icon>
+            <list-tasks />
             <span contenteditable="true" class="modal__title--text">Task #1</span>
           </h3>
         </div>
@@ -63,7 +69,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapGetters, mapActions } from 'vuex'
-import {MoreFilled, Management} from "@element-plus/icons-vue";
+import { MoreFilled, Management } from "@element-plus/icons-vue";
 import draggable from 'vuedraggable'
 
 export default defineComponent({
@@ -143,7 +149,7 @@ export default defineComponent({
     }
   }
   &__bottom {
-    padding-top: 20px;
+    padding-top: 10px;
     text-align: center;
   }
   &__link {
@@ -154,6 +160,7 @@ export default defineComponent({
     background: none;
     border: none;
     cursor: pointer;
+    user-select: none;
   }
 }
 .task {
@@ -212,12 +219,12 @@ export default defineComponent({
   }
 }
 .draggable {
-  min-height: 50px;
+  max-height: calc(100% - 120px);
+  min-height: 40px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   overflow-x: auto;
-  max-height: calc(100% - 120px);
   padding: 20px 4px;
 }
 .edit_point {
