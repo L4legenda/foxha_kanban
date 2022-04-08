@@ -8,7 +8,8 @@ export default createStore({
     },
 
     _DEFAULT_TASK: {
-      name: "Task #1"
+      name: "Task #1",
+      description: "",
     },
 
     boards: [
@@ -16,33 +17,20 @@ export default createStore({
         name: "Board #1",
         tasks: [
           {
-            name: "Task #1"
+            name: "Task #1",
+            description: "",
           },
           {
-            name: "Task #2"
+            name: "Task #2",
+            description: "",
           },
           {
-            name: "Task #3"
+            name: "Task #3",
+            description: "",
           },
           {
-            name: "Task #4"
-          }
-        ]
-      },
-      {
-        name: "Board #2",
-        tasks: [
-          {
-            name: "Task #1"
-          },
-          {
-            name: "Task #2"
-          },
-          {
-            name: "Task #3"
-          },
-          {
-            name: "Task #4"
+            name: "Task #4",
+            description: "",
           }
         ]
       }
@@ -62,11 +50,16 @@ export default createStore({
     },
     insertTask(state, keyBoard){
       state.boards[keyBoard].tasks.push({
-        name: "Task #1"
+        name: "Task #1",
+        description: "",
       });
     },
-    deleteBoard(state, keyBoard){      
+    deleteBoard(state, keyBoard){
       state.boards.splice(keyBoard, 1);
+    },
+    editTitleBoard(state, {$event, keyBoard}){
+      const name = $event.target.textContent;
+      state.boards[keyBoard].name = name; 
     }
   },
   actions: {
@@ -76,9 +69,15 @@ export default createStore({
     insertTask(context, keyBoard){       
       context.commit("insertTask", keyBoard);
     },
-    deleteBoard(context, keyBoard){      
+    deleteBoard(context, keyBoard){
       context.commit("deleteBoard", keyBoard);
-    }
+    },
+    editTitleBoard(context, {$event, keyBoard}){
+      context.commit("editTitleBoard", {$event, keyBoard});
+    },
+    deleteTask(context, keyBoard){
+      context.commit("deleteTask", keyBoard);
+    },
   },
   modules: {
   },
