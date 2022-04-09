@@ -12,6 +12,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import { mapActions } from 'vuex'
 import { TaskType } from "../model/types";
 
 export default defineComponent({
@@ -24,10 +25,13 @@ export default defineComponent({
   },
   data: () => ({}),
   methods: {
+    ...mapActions("Task", [
+      "select_task",
+      "open_modal",
+    ]),
     openModal(task: TaskType) {
-      this.selecTask = tasks;
-
-      this.isModal = true;
+      this.select_task({key_board: 0, key_task: 0});
+      this.open_modal();
     },
   },
   computed: {},
@@ -35,3 +39,20 @@ export default defineComponent({
   components: {},
 });
 </script>
+<style lang="scss" scoped>
+.task {
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #0003;
+  user-select: none;
+  cursor: pointer;
+
+  &__title {
+    margin: 10px 0;
+    font-weight: 200;
+    font-size: 16px;
+    color: #393939;
+  }
+}
+</style>

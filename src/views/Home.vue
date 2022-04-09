@@ -34,18 +34,11 @@
 
             <draggable class="draggable" :list="board.element.tasks" item-key="id" group="tasks">
               <template #item="task">
-                <div class="task" @click="openModal(task.element)">
-                  <div class="marker__list">
-                    <el-tag>Tag 1</el-tag>
-                  </div>
-                  <h3 class="task__title">{{ task.element.name }}</h3>
-                  <div class="bottom__content">
-                    <div class="info"></div>
-                    <div class="users__list"></div>
-                  </div>
-                </div>
+                <Task :task="task.element" />
               </template>
             </draggable>
+
+
 
             <div class="board__bottom">
               <button @click="insertTask(board.index)" class="board__link">Добавить задачу</button>
@@ -58,30 +51,7 @@
       </div>
     </div>
 
-    <el-dialog v-model="isModal">
-      <div class="modal__header">
-        <h3 class="modal__title">
-          <el-icon class="modal__title--icon">
-            <management />
-          </el-icon>
-          <list-tasks />
-          <span
-            contenteditable="true"
-            class="modal__title--text"
-            @input="editTitle"
-          >{{ selecTask.name }}</span>
-        </h3>
-      </div>
-      <div class="modal__body">
-        <div class="modal__body--main">
-          <textarea class="modal__textarea" v-model="selecTask.description"></textarea>
-        </div>
-        <div class="modal__body--sidebar">
-          <el-button class="sidebar__btn">Метки</el-button>
-          <el-button type="danger" class="sidebar__btn">Удалить</el-button>
-        </div>
-      </div>
-    </el-dialog>
+    
   </div>
 </template>
 
@@ -90,11 +60,11 @@ import { defineComponent } from 'vue';
 import { mapGetters, mapActions } from 'vuex'
 import { MoreFilled, Management } from "@element-plus/icons-vue";
 import draggable from 'vuedraggable';
+import Task from "@/components/task/view/Task.vue";
 
 export default defineComponent({
   name: 'Home',
   data: () => ({
-    isModal: false,
     selecTask: {
       name: "",
       description: "",
@@ -108,17 +78,6 @@ export default defineComponent({
       'deleteTask',
       'editTitleBoard',
     ]),
-    openModal(tasks: any) {
-      this.selecTask = tasks;
-
-      this.isModal = true;
-    },
-    closeModal() {
-      this.isModal = false;
-    },
-    editTitle(e: any) {
-      this.selecTask.name = e.target.textContent
-    },
   },
   computed: {
     ...mapGetters([
@@ -131,6 +90,7 @@ export default defineComponent({
     draggable: draggable,
     MoreFilled,
     Management,
+    Task,
   },
 });
 </script>
@@ -205,21 +165,7 @@ export default defineComponent({
     user-select: none;
   }
 }
-.task {
-  background: #ffffff;
-  padding: 14px;
-  border-radius: 5px;
-  box-shadow: 0 0 5px #0003;
-  user-select: none;
-  cursor: pointer;
 
-  &__title {
-    margin: 10px 0;
-    font-weight: 200;
-    font-size: 16px;
-    color: #393939;
-  }
-}
 .box {
   &__right {
     width: 300px;
