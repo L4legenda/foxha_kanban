@@ -125,6 +125,7 @@ export default defineComponent({
   }
   &__list {
     display: flex;
+    align-items: flex-start;
     gap: 40px;
     height: 100%;
   }

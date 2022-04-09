@@ -13,6 +13,9 @@ const state: TaskStateType = {
 const getters = {
     select_task(state: TaskStateType): TaskStateType['select_task'] {
         return state.select_task;
+    },
+    is_modal(state: TaskStateType): boolean {
+        return state.is_modal;
     }
 }
 
