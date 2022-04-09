@@ -118,8 +118,7 @@ export default defineComponent({
     },
     editTitle(e: any) {
       this.selecTask.name = e.target.textContent
-
-    }
+    },
   },
   computed: {
     ...mapGetters([
