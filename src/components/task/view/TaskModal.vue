@@ -29,7 +29,6 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: "TaskModal",
-  props: {},
   data: () => ({}),
   methods: {
     ...mapActions("Task", [

@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    
+    <task-modal />
   </div>
 </template>
 
@@ -61,6 +61,8 @@ import { mapGetters, mapActions } from 'vuex'
 import { MoreFilled, Management } from "@element-plus/icons-vue";
 import draggable from 'vuedraggable';
 import Task from "@/components/task/view/Task.vue";
+import TaskModal from "@/components/task/view/TaskModal.vue";
+
 
 export default defineComponent({
   name: 'Home',
@@ -91,6 +93,7 @@ export default defineComponent({
     MoreFilled,
     Management,
     Task,
+    TaskModal,
   },
 });
 </script>
