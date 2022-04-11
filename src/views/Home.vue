@@ -1,10 +1,17 @@
 <template>
-  <div class="home">
-    <h2 class="title">Название Бокса</h2>
-    <p class="description">Описание Бокса</p>
-    <board />
+    <div class="home">
+        <h2 class="title">Название Бокса</h2>
+        <p class="description">Описание Бокса</p>
+        <div class="view__data">
+            <el-button-group>
+                <el-button type="primary">Доски</el-button>
+                <el-button type="primary">Таблица</el-button>
+            </el-button-group>
+        </div>
+        <board />
 
-    <task-modal />  </div>
+        <task-modal />  
+    </div>
 </template>
 
 <script lang="ts">
@@ -15,46 +22,51 @@ import Board from "@/components/board/view/Board.vue";
 
 
 export default defineComponent({
-  name: 'Home',
-  data: () => ({}),
-  methods: {},
-  computed: {},
-  async mounted() {},
-  components: {
-    Task,
-    TaskModal,
-    Board,
-  },
+    name: 'Home',
+    data: () => ({}),
+    methods: {},
+    computed: {},
+    async mounted() { },
+    components: {
+        Task,
+        TaskModal,
+        Board,
+    },
 });
 </script>
 <style lang="scss">
 .box {
-  &__right {
-    width: 300px;
-    flex-shrink: 0;
-    flex-basis: 300px;
-  }
-
-  &__add {
-    $color_bg: #e8e9ed;
-
-    background: $color_bg;
-    padding: 10px 20px;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 4px;
-    color: #2c2c2c;
-    font-weight: 400;
-    cursor: pointer;
-    user-select: none;
-
-    &:hover {
-      background: darken($color_bg, 10%);
+    &__right {
+        width: 300px;
+        flex-shrink: 0;
+        flex-basis: 300px;
     }
 
-    &:active {
-      box-shadow: 0 0 3px #0004;
+    &__add {
+        $color_bg: #e8e9ed;
+
+        background: $color_bg;
+        padding: 10px 20px;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 4px;
+        color: #2c2c2c;
+        font-weight: 400;
+        cursor: pointer;
+        user-select: none;
+
+        &:hover {
+            background: darken($color_bg, 10%);
+        }
+
+        &:active {
+            box-shadow: 0 0 3px #0004;
+        }
     }
-  }
+}
+
+.view__data {
+    display: flex;
+    justify-content: flex-end;
 }
 </style>

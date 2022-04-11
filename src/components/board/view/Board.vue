@@ -31,7 +31,7 @@
 
 
                     <div class="board__bottom">
-                        <button @click="insertTask(board.index)" class="board__link">Добавить задачу</button>
+                        <button @click="createTask(board.element.id)" class="board__link">Добавить задачу</button>
                     </div>
 
                 </div>
@@ -65,6 +65,9 @@ export default defineComponent({
             'readBoard',
             'deleteBoard',
         ]),
+        ...mapActions('Task', [
+            "createTask",
+        ])
     },
     computed: {
         ...mapGetters('Board', [
