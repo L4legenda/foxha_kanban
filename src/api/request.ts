@@ -1,0 +1,23 @@
+import axios from "axios";
+
+export default class request{
+    DEFAUT_URL:string = "http://localhost:8080/v1/graphql"
+
+    response: any = {}
+    data: any = {}
+
+    constructor(){
+
+    }
+
+    async fetch(data:object={}){
+        const request = await axios({
+            method: "POST",
+            url: this.DEFAUT_URL,
+            data: data,
+        });
+        this.response = request;
+        this.data = request.data;
+        return request;
+    }
+}

@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import Task from "@/components/task/model";
+import Board from "@/components/board/model";
 
 export default createStore({
   state: {
@@ -82,5 +83,6 @@ export default createStore({
   },
   modules: {
     Task,
+    Board,
   },
 });

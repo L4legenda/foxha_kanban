@@ -1,5 +1,5 @@
-import { TaskStateType } from "../model/types";
-import { TaskInputType } from "../model/types";
+import { TaskStateType } from "./types";
+import { TaskInputType } from "./types";
 
 
 const state: TaskStateType = {
