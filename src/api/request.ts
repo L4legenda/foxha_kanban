@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default class request{
-    DEFAUT_URL:string = "http://localhost:8080/v1/graphql"
+    DEFAUT_URL:string = "http://23.111.121.1:8080/v1/graphql"
 
     response: any = {}
     data: any = {}
