@@ -5,7 +5,7 @@
                 <div class="board__item">
                     <h3 class="board__title">
                         <span contenteditable="true" class="board__title--text"
-                            @input="editTitleBoard({ $event, keyBoard: board.index })">{{ board.element?.name }}</span>
+                            @keydown.enter.prevent="submitTitle($event, board.element.id)">{{ board.element?.name }}</span>
                         <el-dropdown>
                             <span class="el-dropdown-link" style="cursor: pointer">
                                 <el-icon class="edit_point">
@@ -40,7 +40,8 @@
 
         <div class="box__right">
             <div class="box__add" @click="createBoard()">+ Добавить доску</div>
-        </div>  </div>
+        </div>
+    </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -58,16 +59,22 @@ export default defineComponent({
             'insertBoard',
             'insertTask',
             'deleteTask',
-            'editTitleBoard',
         ]),
         ...mapActions('Board', [
             'createBoard',
             'readBoard',
             'deleteBoard',
+            'updateBoardTitle',
         ]),
         ...mapActions('Task', [
             "createTask",
-        ])
+        ]),
+        submitTitle(event: KeyboardEvent, id_board: number) {
+            const element: HTMLElement = event.target as HTMLElement;
+            const value: string | null = element.textContent;
+
+            this.updateBoardTitle({ id: id_board, name: value });
+        }
     },
     computed: {
         ...mapGetters('Board', [

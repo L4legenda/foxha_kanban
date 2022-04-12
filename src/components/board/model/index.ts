@@ -47,7 +47,11 @@ const actions = {
         const data = api.data;
         commit("readBoard", data);
     },
-    async updateBoard() { },
+    async updateBoardTitle({ commit, dispatch }: { commit: any, dispatch: any }, { id, name }: { id: number, name: string }) {
+        await api.updateBoardTitleFetch(id, name);
+        await dispatch("readBoard");
+
+    },
     async deleteBoard({ commit, dispatch }: { commit: any, dispatch: any }, id: number) {
         console.log(id);
 

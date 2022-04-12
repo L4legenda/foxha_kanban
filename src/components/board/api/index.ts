@@ -25,7 +25,12 @@ export default class ApiBoard extends Requests {
         }
       `
 
-    private updateBoardGQL = ``
+    private updateBoardTitleGQL = `
+        mutation updateBoardTitle($id: Int!, $name: String!) {
+            update_Board(where: {id: {_eq: $id}}, _set: {name: $name}) {
+                affected_rows
+            }
+        }`
 
     private deleteBoardGQL = `
         mutation deleteBoard(\$id: Int!) {
@@ -47,8 +52,14 @@ export default class ApiBoard extends Requests {
         });
     }
 
-    async updateBoardFetch() {
-
+    async updateBoardTitleFetch(id: number, name: string) { 
+        await this.fetch({
+            query: this.updateBoardTitleGQL,
+            variables: {
+                id,
+                name,
+            }
+        });
     }
 
     async deleteBoardFetch(id: number) {
