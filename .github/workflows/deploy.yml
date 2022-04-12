@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Deploy to server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.LOGINSSH }}
+        password: ${{ secrets.PASSWORDSSH }}
+        port: 22
+        script: |
+          cd /var/www/html
+          git restore package-lock.json
+          git pull origin master
+          npm install
+          npm run build
