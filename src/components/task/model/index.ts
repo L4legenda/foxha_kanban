@@ -1,5 +1,8 @@
-import { TaskStateType } from "../model/types";
-import { TaskInputType } from "../model/types";
+import { TaskStateType } from "./types";
+import { TaskInputType } from "./types";
+import Api from "../api";
+
+const api = new Api();
 
 
 const state: TaskStateType = {
@@ -20,6 +23,25 @@ const getters = {
 }
 
 const mutations = {
+
+    /* CRUD */
+
+    createTask(state: TaskStateType){
+
+    },
+
+    readTask(state: TaskStateType, data: any){
+
+    },
+
+    updateTask(state: TaskStateType){
+
+    },
+
+    deleteTask(state: TaskStateType){
+
+    },
+
     select_task(state: TaskStateType, { key_board, key_task }: TaskInputType) {
         state.select_task = {
             id_board: key_board,
@@ -37,6 +59,15 @@ const mutations = {
 }
 
 const actions = {
+    /* CRUD */
+
+    async createTask(context: any, id_board: number){
+        await api.createTaskFetch(id_board);
+        console.log(context);
+        
+        await context.dispatch("Board/readBoard", '', { root: true });
+    },
+
     select_task({ commit }: { commit: any }, { key_board, key_task }: TaskInputType) {
         commit("select_task", { key_board, key_task });
     },
