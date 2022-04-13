@@ -4,6 +4,7 @@ import {TaskType} from "@/components/task/model/types";
 interface BoardType {
     name: string;
     id: number;
+    position: number;
     Tasks: TaskType;
 }
 interface BoardStateType {

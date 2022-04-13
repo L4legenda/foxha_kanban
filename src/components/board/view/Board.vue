@@ -1,6 +1,6 @@
 <template>
     <div class="board__body">
-        <draggable class="board__list" :list="Boards" item-key="id" group="board">
+        <draggable class="board__list" :list="Boards" item-key="id" group="board" @end="endMove">
             <template #item="board">
                 <div class="board__item">
                     <h3 class="board__title">
@@ -49,7 +49,6 @@ import { mapGetters, mapActions } from 'vuex'
 import { MoreFilled, Management } from "@element-plus/icons-vue";
 import draggable from 'vuedraggable';
 import Task from "@/components/task/view/Task.vue";
-import TaskModal from "@/components/task/view/TaskModal.vue";
 
 export default defineComponent({
     name: "Board",
@@ -65,15 +64,21 @@ export default defineComponent({
             'readBoard',
             'deleteBoard',
             'updateBoardTitle',
+            'updateBoardMove',
         ]),
         ...mapActions('Task', [
             "createTask",
         ]),
+
         submitTitle(event: KeyboardEvent, id_board: number) {
             const element: HTMLElement = event.target as HTMLElement;
             const value: string | null = element.textContent;
 
             this.updateBoardTitle({ id: id_board, name: value });
+        },
+
+        endMove(e: any){
+            this.updateBoardMove(e.newIndex);
         }
     },
     computed: {

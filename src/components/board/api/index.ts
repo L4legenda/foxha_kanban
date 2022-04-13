@@ -12,9 +12,10 @@ export default class ApiBoard extends Requests {
 
     private readBoardGQL = `
         query readBoard {
-            Board {
+            Board(order_by: {position: asc}) {
                 name
                 id
+                position
                 Tasks {
                   id
                   content
@@ -28,6 +29,13 @@ export default class ApiBoard extends Requests {
     private updateBoardTitleGQL = `
         mutation updateBoardTitle($id: Int!, $name: String!) {
             update_Board(where: {id: {_eq: $id}}, _set: {name: $name}) {
+                affected_rows
+            }
+        }`
+    
+    private updateBoardMoveGQL = `
+        mutation updateBoardMove($id: Int!, $position: float8!) {
+            update_Board(where: {id: {_eq: $id}}, _set: {position: $position}) {
                 affected_rows
             }
         }`
@@ -59,6 +67,16 @@ export default class ApiBoard extends Requests {
                 id,
                 name,
             }
+        });
+    }
+
+    async updateBoardMove(id: number, position: number){
+        await this.fetch({
+            query: this.updateBoardMoveGQL,
+            variables: {
+                id,
+                position,
+            },
         });
     }
 
