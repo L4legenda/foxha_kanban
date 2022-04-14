@@ -5,7 +5,7 @@
                 <div class="board__item">
                     <h3 class="board__title">
                         <span contenteditable="true" class="board__title--text"
-                            @keydown.enter.prevent="submitTitle($event, board.element.id)">{{ board.element?.name }}</span>
+                            @input="submitTitle($event, board.element.id)">{{ board.element?.name }}</span>
                         <el-dropdown>
                             <span class="el-dropdown-link" style="cursor: pointer">
                                 <el-icon class="edit_point">
@@ -52,7 +52,9 @@ import Task from "@/components/task/view/Task.vue";
 
 export default defineComponent({
     name: "Board",
-    data: () => ({}),
+    data: () => ({
+        numberTimeout: 0,
+    }),
     methods: {
         ...mapActions([
             'insertBoard',
@@ -70,14 +72,20 @@ export default defineComponent({
             "createTask",
         ]),
 
-        submitTitle(event: KeyboardEvent, id_board: number) {
-            const element: HTMLElement = event.target as HTMLElement;
-            const value: string | null = element.textContent;
+        submitTitle(event: Event, id_board: number) {
 
-            this.updateBoardTitle({ id: id_board, name: value });
+
+            clearTimeout(this.numberTimeout);
+            this.numberTimeout = window.setTimeout(() => {
+                const element: HTMLElement = event.target as HTMLElement;
+                const value: string | null = element.textContent;
+                this.updateBoardTitle({ id: id_board, name: value });
+            }, 300);
+
+
         },
 
-        endMove(e: any){
+        endMove(e: any) {
             this.updateBoardMove(e.newIndex);
         }
     },

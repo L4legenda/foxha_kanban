@@ -49,7 +49,6 @@ const actions = {
     },
     async updateBoardTitle({ commit, dispatch }: { commit: any, dispatch: any }, { id, name }: { id: number, name: string }) {
         await api.updateBoardTitleFetch(id, name);
-        await dispatch("readBoard");
 
     },
     async updateBoardMove({ dispatch, state }: { dispatch: any, state: BoardStateType }, index: number,) {
@@ -65,7 +64,14 @@ const actions = {
             position_right = board_right.position;
         } else if (board_left && !board_right) {
             position_left = board_left.position;
-            position_right = board_left.position + board_main.position + 1;
+
+            let max_position = 0;
+            for(let board of state.Boards) {
+                if(board.position >= max_position) {
+                    max_position = board.position;
+                }
+            }
+            position_right = max_position + 0.001;
         } else if (!board_left && !board_right) {
             return;
         } else if (board_left && board_right) {
