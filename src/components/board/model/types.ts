@@ -5,7 +5,7 @@ interface BoardType {
     name: string;
     id: number;
     position: number;
-    Tasks: TaskType;
+    Tasks: Array<TaskType>;
 }
 interface BoardStateType {
     Boards: Array<BoardType>;

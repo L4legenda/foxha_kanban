@@ -1,5 +1,6 @@
 interface TaskType {
     name: string;
+    position: number;
 }
 interface TaskStateType {
     select_task: {

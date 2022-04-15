@@ -1,6 +1,6 @@
 <template>
     <div class="board__body">
-        <draggable class="board__list" :list="Boards" item-key="id" group="board" @end="endMove">
+        <draggable class="board__list" :list="Boards" item-key="id" group="board" @end="endBoardMove">
             <template #item="board">
                 <div class="board__item">
                     <h3 class="board__title">
@@ -23,7 +23,8 @@
                         </el-dropdown>
                     </h3>
 
-                    <draggable class="draggable" :list="board.element.Tasks" item-key="id" group="tasks">
+                    <draggable class="draggable" :list="board.element.Tasks" item-key="id"
+                        @end="endTaskMove($event)" group="tasks" :data-index="board.index">
                         <template #item="task">
                             <task :task="task.element" />
                         </template>
@@ -31,7 +32,8 @@
 
 
                     <div class="board__bottom">
-                        <button @click="createTask(board.element.id)" class="board__link">Добавить задачу</button>
+                        <button @click="createTask({ id_board: board.element.id, index_board: board.index })"
+                            class="board__link">Добавить задачу</button>
                     </div>
 
                 </div>
@@ -70,6 +72,7 @@ export default defineComponent({
         ]),
         ...mapActions('Task', [
             "createTask",
+            'updateTaskMove',
         ]),
 
         submitTitle(event: Event, id_board: number) {
@@ -85,8 +88,16 @@ export default defineComponent({
 
         },
 
-        endMove(e: any) {
+        endBoardMove(e: any) {
             this.updateBoardMove(e.newIndex);
+        },
+
+        endTaskMove(event: any) {
+            console.log(event);
+            const index_board: number = event.to.dataset.index;
+            console.log(index_board);
+            
+            this.updateTaskMove({ indexTask: event.newIndex, indexBoard: index_board });
         }
     },
     computed: {

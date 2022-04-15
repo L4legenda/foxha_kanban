@@ -16,11 +16,12 @@ export default class ApiBoard extends Requests {
                 name
                 id
                 position
-                Tasks {
+                Tasks(order_by: {position: asc}) {
                   id
                   content
                   name
                   id_board
+                  position
                 }
               }
         }
