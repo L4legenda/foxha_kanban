@@ -139,10 +139,11 @@ export default defineComponent({
             padding: 6px 8px;
             border-radius: 4px;
             box-sizing: border-box;
+            border: 2px solid #fff;
 
             &:focus {
                 background: #fff;
-                border: 2px solid rgb(12, 4, 162);
+                border: 2px solid #006adb60;
                 outline: none;
             }
         }
