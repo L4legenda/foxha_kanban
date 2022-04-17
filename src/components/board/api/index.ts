@@ -18,7 +18,6 @@ export default class ApiBoard extends Requests {
                 position
                 Tasks(order_by: {position: asc}) {
                   id
-                  content
                   name
                   id_board
                   position

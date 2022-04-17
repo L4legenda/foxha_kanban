@@ -1,5 +1,5 @@
 import { TaskStateType } from "./types";
-import { TaskInputType } from "./types";
+import { TaskType } from "./types";
 import { BoardType } from '../../board/model/types';
 import Api from "../api";
 
@@ -7,16 +7,13 @@ const api = new Api();
 
 
 const state: TaskStateType = {
-    select_task: {
-        id_board: 0,
-        id_task: 0,
-    },
+    selected_task: undefined,
     is_modal: false,
 }
 
 const getters = {
-    select_task(state: TaskStateType): TaskStateType['select_task'] {
-        return state.select_task;
+    selected_task(state: TaskStateType): TaskStateType['selected_task'] {
+        return state.selected_task;
     },
     is_modal(state: TaskStateType): boolean {
         return state.is_modal;
@@ -43,11 +40,8 @@ const mutations = {
 
     },
 
-    select_task(state: TaskStateType, { key_board, key_task }: TaskInputType) {
-        state.select_task = {
-            id_board: key_board,
-            id_task: key_task,
-        }
+    select_task(state: TaskStateType, task: TaskType) {
+        state.selected_task = task;
     },
 
     open_modal(state: TaskStateType) {
@@ -80,15 +74,33 @@ const actions = {
         await dispatch("Board/readBoard", '', { root: true });
     },
 
-    select_task({ commit }: { commit: any }, { key_board, key_task }: TaskInputType) {
-        commit("select_task", { key_board, key_task });
+    async updateTaskTitle({ dispatch }: { dispatch: any }, { id, name }: { id: number, name: string }) {
+        await api.updateTaskTitleFetch(id, name);
     },
 
-    open_modal({ commit }: { commit: any }) {
+    async updateTaskContent({ dispatch }: { dispatch: any }, { id, name }: { id: number, name: string }) {
+        await api.updateTaskContentFetch(id, name);
+    },
+
+    async deleteTask({ dispatch }: { dispatch: any }, id_task: number){
+        await api.deleteTaskFetch(id_task);
+        await dispatch("Board/readBoard", '', { root: true });
+        await dispatch("close_modal");
+    },
+
+    async select_task({ commit }: { commit: any }, { id_task }: {id_task: number}) {
+        console.log(id_task);
+        await api.readTaskFetch(id_task);
+        const task = await api.data?.data?.Task?.[0];
+        commit("select_task", task);
+    },
+
+    async open_modal({ commit }: { commit: any }) {
         commit("open_modal");
     },
 
-    close_modal({ commit }: { commit: any }) {
+    async close_modal({ commit, dispatch }: { commit: any, dispatch: any }) {
+        await dispatch("Board/readBoard", '', { root: true });
         commit("close_modal");
     },
 

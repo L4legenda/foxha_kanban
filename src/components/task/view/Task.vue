@@ -29,8 +29,8 @@ export default defineComponent({
       "select_task",
       "open_modal",
     ]),
-    openModal(task: TaskType) {
-      this.select_task({key_board: 0, key_task: 0});
+    async openModal(task: TaskType) {
+      await this.select_task({ id_task: task.id });
       this.open_modal();
     },
   },

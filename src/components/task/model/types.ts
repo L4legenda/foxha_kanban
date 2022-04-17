@@ -1,12 +1,12 @@
+import { BoardType } from "../../board/model/types";
 interface TaskType {
+    id: number;
     name: string;
     position: number;
+    Board: BoardType;
 }
 interface TaskStateType {
-    select_task: {
-        id_board?: number;
-        id_task?: number;
-    },
+    selected_task?: TaskType,
     is_modal: boolean;
 }
 

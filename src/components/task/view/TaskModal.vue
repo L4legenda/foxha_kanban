@@ -1,24 +1,31 @@
 <template>
-    <el-dialog v-model="is_modal">
+    <el-dialog v-model="modal">
         <div class="modal__header">
             <h3 class="modal__title">
                 <el-icon class="modal__title--icon">
                     <management />
                 </el-icon>
                 <list-tasks />
-                <span contenteditable="true" class="modal__title--text">{{ }}</span>
+                <span contenteditable="true" @input="submitTitle($event, selected_task?.id)" class="modal__title--text"
+                    v-text="selected_task?.name"></span>
             </h3>
         </div>
         <div class="modal__body">
             <div class="modal__body--main">
-                <textarea class="modal__textarea"></textarea>
+                <textarea class="modal__textarea"
+                    @input="submitContent($event, selected_task?.id)">{{ selected_task?.content }}</textarea>
             </div>
             <div class="modal__body--sidebar">
                 <el-button class="sidebar__btn">Метки</el-button>
-                <el-button type="danger" class="sidebar__btn">Удалить</el-button>
+                <el-popconfirm title="Уверены что хотите удалить задачу ?" @confirm="deleteTask(selected_task?.id)">
+                    <template #reference>
+                        <el-button type="danger" class="sidebar__btn">Удалить</el-button>
+                    </template>
+                </el-popconfirm>
+                
             </div>
         </div>
-        </el-dialog>
+    </el-dialog>
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
@@ -26,17 +33,50 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default defineComponent({
     name: "TaskModal",
-    data: () => ({}),
+    data: () => ({
+        numberTimeout: 0,
+    }),
     methods: {
         ...mapActions("Task", [
             "select_task",
             "open_modal",
+            "close_modal",
+            "updateTaskTitle",
+            "updateTaskContent",
+            "deleteTask",
         ]),
+
+        submitTitle(event: Event, id_task: number) {
+            clearTimeout(this.numberTimeout);
+            this.numberTimeout = window.setTimeout(() => {
+                const element: HTMLElement = event.target as HTMLElement;
+                const value: string | null = element.textContent;
+                this.updateTaskTitle({ id: id_task, name: value });
+            }, 300);
+        },
+
+        submitContent(event: Event, id_task: number) {
+            clearTimeout(this.numberTimeout);
+            this.numberTimeout = window.setTimeout(() => {
+                const element: HTMLInputElement = event.target as HTMLInputElement;
+                const value: string = element.value;
+                this.updateTaskContent({ id: id_task, name: value });
+            }, 300);
+        },
     },
     computed: {
         ...mapGetters("Task", [
             "is_modal",
-        ])
+            'selected_task',
+        ]),
+        modal: {
+            get() {
+                return this.is_modal;
+            },
+            set(value: boolean) {
+                value ? this.open_modal() : this.close_modal();
+            }
+        }
     },
     mounted() { },
     components: {},

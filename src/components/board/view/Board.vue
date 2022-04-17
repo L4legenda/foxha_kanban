@@ -123,7 +123,7 @@ export default defineComponent({
         gap: 40px;
         padding: 20px 40px;
         width: 100%;
-        height: calc(100vh - 110px);
+        height: calc(100vh - 150px);
         box-sizing: border-box;
         overflow-x: auto;
         overflow-y: hidden;
@@ -157,7 +157,7 @@ export default defineComponent({
 
     &__item {
         width: 300px;
-        max-height: 100vh;
+        max-height: 76vh;
         padding: 16px;
         background: #f6f8fc;
         box-shadow: 0 0 5px #0005;
@@ -196,7 +196,7 @@ export default defineComponent({
 }
 
 .draggable {
-    max-height: calc(100vh - 320px);
+    max-height: calc(76vh - 130px);
     min-height: 40px;
     display: flex;
     flex-direction: column;
