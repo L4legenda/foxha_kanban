@@ -6,14 +6,13 @@
                     <management />
                 </el-icon>
                 <list-tasks />
-                <span contenteditable="true" @input="submitTitle($event, selected_task?.id)" class="modal__title--text"
-                    v-text="selected_task?.name"></span>
+                <input type="text"  @input="submitTitle($event, selected_task?.id)" class="modal__title--text" :value="selected_task?.name">
             </h3>
         </div>
         <div class="modal__body">
             <div class="modal__body--main">
                 <textarea class="modal__textarea"
-                    @input="submitContent($event, selected_task?.id)">{{ selected_task?.content }}</textarea>
+                    @input="submitContent($event, selected_task?.id)" :value="selected_task?.content"></textarea>
             </div>
             <div class="modal__body--sidebar">
                 <el-button class="sidebar__btn">Метки</el-button>
@@ -49,8 +48,8 @@ export default defineComponent({
         submitTitle(event: Event, id_task: number) {
             clearTimeout(this.numberTimeout);
             this.numberTimeout = window.setTimeout(() => {
-                const element: HTMLElement = event.target as HTMLElement;
-                const value: string | null = element.textContent;
+                const element: HTMLInputElement = event.target as HTMLInputElement;
+                const value: string | null = element.value;
                 this.updateTaskTitle({ id: id_task, name: value });
             }, 300);
         },

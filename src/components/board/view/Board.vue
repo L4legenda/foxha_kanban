@@ -4,8 +4,8 @@
             <template #item="board">
                 <div class="board__item">
                     <h3 class="board__title">
-                        <span contenteditable="true" class="board__title--text"
-                            @input="submitTitle($event, board.element.id)">{{ board.element?.name }}</span>
+                        <input type="text" class="board__title--text" @input="submitTitle($event, board.element.id)"
+                            :value="board.element?.name">
                         <el-dropdown>
                             <span class="el-dropdown-link" style="cursor: pointer">
                                 <el-icon class="edit_point">
@@ -23,8 +23,8 @@
                         </el-dropdown>
                     </h3>
 
-                    <draggable class="draggable" :list="board.element.Tasks" item-key="id"
-                        @end="endTaskMove($event)" group="tasks" :data-index="board.index">
+                    <draggable class="draggable" :list="board.element.Tasks" item-key="id" @end="endTaskMove($event)"
+                        group="tasks" :data-index="board.index">
                         <template #item="task">
                             <task :task="task.element" />
                         </template>
@@ -80,8 +80,8 @@ export default defineComponent({
 
             clearTimeout(this.numberTimeout);
             this.numberTimeout = window.setTimeout(() => {
-                const element: HTMLElement = event.target as HTMLElement;
-                const value: string | null = element.textContent;
+                const element: HTMLInputElement = event.target as HTMLInputElement;
+                const value: string | null = element.value;
                 this.updateBoardTitle({ id: id_board, name: value });
             }, 300);
 
@@ -96,7 +96,7 @@ export default defineComponent({
             console.log(event);
             const index_board: number = event.to.dataset.index;
             console.log(index_board);
-            
+
             this.updateTaskMove({ indexTask: event.newIndex, indexBoard: index_board });
         }
     },
