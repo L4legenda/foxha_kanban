@@ -107,10 +107,11 @@ export default defineComponent({
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 20px;
+            border: 2px solid #fff;
 
             &:focus {
                 background: #fff;
-                border: 2px solid rgb(12, 4, 162);
+                border: 2px solid #006adb60;
                 outline: none;
             }
         }
