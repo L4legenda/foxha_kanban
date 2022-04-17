@@ -136,6 +136,8 @@ export default defineComponent({
 
         &--text {
             width: 100%;
+            font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
             padding: 6px 8px;
             border-radius: 4px;
             box-sizing: border-box;
