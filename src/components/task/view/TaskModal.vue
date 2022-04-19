@@ -6,22 +6,23 @@
                     <management />
                 </el-icon>
                 <list-tasks />
-                <input type="text"  @input="submitTitle($event, selected_task?.id)" class="modal__title--text" :value="selected_task?.name">
+                <input type="text" @input="submitTitle($event, selected_task?.id)" class="modal__title--text"
+                    :value="selected_task?.name">
             </h3>
         </div>
         <div class="modal__body">
             <div class="modal__body--main">
-                <textarea class="modal__textarea"
-                    @input="submitContent($event, selected_task?.id)" :value="selected_task?.content"></textarea>
+                <textarea class="modal__textarea" @input="submitContent($event, selected_task?.id)"
+                    :value="selected_task?.content"></textarea>
             </div>
             <div class="modal__body--sidebar">
-                <el-button class="sidebar__btn">Метки</el-button>
+                <el-button class="sidebar__btn" @click="open_modal()">Метки</el-button>
                 <el-popconfirm title="Уверены что хотите удалить задачу ?" @confirm="deleteTask(selected_task?.id)">
                     <template #reference>
                         <el-button type="danger" class="sidebar__btn">Удалить</el-button>
                     </template>
                 </el-popconfirm>
-                
+
             </div>
         </div>
     </el-dialog>
@@ -38,11 +39,14 @@ export default defineComponent({
     methods: {
         ...mapActions("Task", [
             "select_task",
-            "open_modal",
             "close_modal",
             "updateTaskTitle",
             "updateTaskContent",
             "deleteTask",
+        ]),
+
+        ...mapActions("Marker", [
+            "open_modal",
         ]),
 
         submitTitle(event: Event, id_task: number) {
@@ -73,7 +77,9 @@ export default defineComponent({
                 return this.is_modal;
             },
             set(value: boolean) {
-                value ? this.open_modal() : this.close_modal();
+                if (!value) {
+                    this.close_modal();
+                }
             }
         }
     },
@@ -81,7 +87,7 @@ export default defineComponent({
     components: {},
 });
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .modal {
     &--bg {
         position: absolute;
@@ -101,7 +107,7 @@ export default defineComponent({
         }
 
         &--text {
-            width: 100%;
+            width: calc(100% - 70px);
             padding: 6px 8px;
             border-radius: 4px;
             box-sizing: border-box;
@@ -156,6 +162,16 @@ export default defineComponent({
     &__btn {
         width: 100%;
         margin-left: 0px !important;
+    }
+}
+
+.el-dialog {
+    &__header {
+        padding: 0;
+    }
+
+    &__body {
+        padding: 1px 6px;
     }
 }
 </style>

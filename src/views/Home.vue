@@ -11,6 +11,7 @@
         <board />
 
         <task-modal />  
+        <marker-modal />
     </div>
 </template>
 
@@ -19,6 +20,7 @@ import { defineComponent } from 'vue';
 import Task from "@/components/task/view/Task.vue";
 import TaskModal from "@/components/task/view/TaskModal.vue";
 import Board from "@/components/board/view/Board.vue";
+import MarkerModal from "@/components/marker/view/MarkerModal.vue";
 
 
 export default defineComponent({
@@ -31,6 +33,7 @@ export default defineComponent({
         Task,
         TaskModal,
         Board,
+        MarkerModal,
     },
 });
 </script>
