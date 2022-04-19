@@ -141,7 +141,8 @@ export default defineComponent({
             padding: 6px 8px;
             border-radius: 4px;
             box-sizing: border-box;
-            border: 2px solid #fff;
+            border: 2px solid #f6f8fc;
+            background: none;
 
             &:focus {
                 background: #fff;
