@@ -17,10 +17,14 @@ export default class ApiBoard extends Requests {
                 id
                 position
                 Tasks(order_by: {position: asc}) {
-                  id
-                  name
-                  id_board
-                  position
+                    id
+                    name
+                    id_board
+                    position
+                    Markers {
+                        name
+                        color
+                    }
                 }
               }
         }
@@ -32,7 +36,7 @@ export default class ApiBoard extends Requests {
                 affected_rows
             }
         }`
-    
+
     private updateBoardMoveGQL = `
         mutation updateBoardMove($id: Int!, $position: float8!) {
             update_Board(where: {id: {_eq: $id}}, _set: {position: $position}) {
@@ -60,7 +64,7 @@ export default class ApiBoard extends Requests {
         });
     }
 
-    async updateBoardTitleFetch(id: number, name: string) { 
+    async updateBoardTitleFetch(id: number, name: string) {
         await this.fetch({
             query: this.updateBoardTitleGQL,
             variables: {
@@ -70,7 +74,7 @@ export default class ApiBoard extends Requests {
         });
     }
 
-    async updateBoardMove(id: number, position: number){
+    async updateBoardMove(id: number, position: number) {
         await this.fetch({
             query: this.updateBoardMoveGQL,
             variables: {

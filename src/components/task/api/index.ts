@@ -16,6 +16,10 @@ export default class ApiTask extends Requests {
             content
             id
             name
+            Markers {
+                name
+                color
+            }
             Board {
                 id
                 name

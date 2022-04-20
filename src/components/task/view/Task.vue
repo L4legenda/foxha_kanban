@@ -1,7 +1,7 @@
 <template>
   <div class="task" @click="openModal(task)">
     <div class="marker__list">
-      <el-tag>Tag 1</el-tag>
+      <el-tag v-for="(marker, key) in task.Markers" :key="key">{{ marker.name }}</el-tag>
     </div>
     <h3 class="task__title">{{ task.name }}</h3>
     <div class="bottom__content">
@@ -18,10 +18,10 @@ import { TaskType } from "../model/types";
 export default defineComponent({
   name: "Task",
   props: {
-      task: {
-        type: Object as PropType<TaskType>,
-        required: true
-      },
+    task: {
+      type: Object as PropType<TaskType>,
+      required: true
+    },
   },
   data: () => ({}),
   methods: {
@@ -35,7 +35,7 @@ export default defineComponent({
     },
   },
   computed: {},
-  mounted() {},
+  mounted() { },
   components: {},
 });
 </script>
@@ -53,6 +53,14 @@ export default defineComponent({
     font-weight: 200;
     font-size: 16px;
     color: #393939;
+  }
+}
+
+.marker {
+  &__list {
+    display: flex;
+    overflow-x: hidden;
+    gap: 10px;
   }
 }
 </style>

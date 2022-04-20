@@ -1,51 +1,29 @@
 <template>
     <el-dialog v-model="modal" width="300px" title="Маркер">
         <div class="marker__list">
-            <div class="marker__item" v-for="(element, key) in marker_list" :key="key" :style="generateStyle(element)">
+            <div class="marker__item" v-for="(element, key) in markers" :key="key" :style="generateStyle(element)" >
                 {{ element.name }}
             </div>
 
         </div>
-        <el-button class="marker__btn--add-marker">Добавить маркер</el-button>
+        <el-button class="marker__btn--add-marker" @click="open_modal_create()">Добавить маркер</el-button>
     </el-dialog>
+    <marker-create-modal/>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapActions, mapGetters } from 'vuex'
+import MarkerCreateModal from "./MarkerCreateModal.vue"
 
 export default defineComponent({
     name: "MarkerModal",
     data: () => ({
-        marker_list: [
-            {
-                name: "Color 1",
-                color: "#61bd4f",
-            },
-            {
-                name: "Color 2",
-                color: "#cd8313",
-            },
-            {
-                name: "Color 3",
-                color: "#b04632",
-            },
-            {
-                name: "Color 4",
-                color: "#89609e",
-            },
-            {
-                name: "Color 5",
-                color: "#055a8c",
-            },
-            {
-                name: "Color 6",
-                color: "#4bbf6b",
-            },
-        ]
     }),
     methods: {
         ...mapActions("Marker", [
-            "close_modal"
+            "close_modal",
+            'open_modal_create',
+            'readMarker',
         ]),
         generateStyle(element: any) {
             return {
@@ -55,20 +33,22 @@ export default defineComponent({
     },
     computed: {
         ...mapGetters("Marker", [
-            "is_modal"
+            "is_modal",
+            "markers",
         ]),
         modal: {
             get(){
                 return this.is_modal;
             },
-            set(value: boolean) {
-                console.log();
-                
+            set(value: boolean) {                
                 if(!value){
                     this.close_modal();
                 }
             }
         }
+    },
+    components: {
+        MarkerCreateModal,
     }
 });
 </script>
